@@ -1,4 +1,5 @@
 ﻿using FileManager.Data;
+using FileManager.Data.Utilities;
 using FileManager.Services.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using System;
@@ -12,6 +13,7 @@ namespace FileManager.Services.Implementations
     public class AppUserManager
     {
         private readonly UserManager<AppUser> userManager;
+        
         public AppUserManager(UserManager<AppUser> _userManager)
         {
             userManager = _userManager;
@@ -24,18 +26,29 @@ namespace FileManager.Services.Implementations
             ServiceResultViewModel result = new ServiceResultViewModel();
             try
             {
-
                 AppUser user = new AppUser { UserName = model.Email, Email = model.Email };
                 IdentityResult identityResult = await userManager.CreateAsync(user, model.Password);
                 result.Success = identityResult.Succeeded;
-
                 if (result.Success)
                 {
-                    result.Message = "User Created";
+                    //add user to role
+                    var roleResult = await userManager.AddToRoleAsync(user, Roles.USERROLE);
+                    result.Success = roleResult.Succeeded;
+                    if (roleResult.Succeeded)
+                    {
+                        result.Data = new { user.Id };
+                        result.Message = "User Created";
+                    }
+                    else
+                    {
+                        // remove user
+                        await userManager.DeleteAsync(user);
+                        result.Message= "Unable to assign role to user";
+                    }                    
                 }
                 else
                 {
-                    result.Message = "Error creating user";
+                    
                     List<string> errorList = new List<string>();
 
                     foreach (IdentityError err in identityResult.Errors)
@@ -44,6 +57,7 @@ namespace FileManager.Services.Implementations
                     }
 
                     result.Data = errorList;
+                    result.Message = $"Error creating user: {string.Join(',', errorList) }";
                 }
 
             }

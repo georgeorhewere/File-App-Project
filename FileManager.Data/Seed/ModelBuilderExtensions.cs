@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using FileManager.Data.Utilities;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -11,14 +12,12 @@ namespace FileManager.Data.Seed
     public static class ModelBuilderExtensions
     {
         public static void Seed(this ModelBuilder builder)
-        {
-            const string ADMINROLE = "Administrator";
-            const string USERROLE = "User";
+        {            
             // Seed App Roles
             List<IdentityRole> roles = new List<IdentityRole>()
             {
-                new IdentityRole { Name = ADMINROLE, NormalizedName = ADMINROLE.ToUpper() },
-                new IdentityRole { Name = USERROLE, NormalizedName = USERROLE.ToUpper() }
+                new IdentityRole { Name = Roles.ADMINROLE, NormalizedName = Roles.ADMINROLE.ToUpper() },
+                new IdentityRole { Name = Roles.USERROLE, NormalizedName = Roles.USERROLE.ToUpper() }
             };
 
             builder.Entity<IdentityRole>().HasData(roles);
@@ -67,14 +66,14 @@ namespace FileManager.Data.Seed
             userRoles.Add(new IdentityUserRole<string>
             {
                 UserId = users[0].Id,
-                RoleId = roles.First(q => q.Name == ADMINROLE).Id
+                RoleId = roles.First(q => q.Name == Roles.ADMINROLE).Id
             });
 
             userRoles.Add(new IdentityUserRole<string>
             {
                 UserId = users[1].Id,
                 RoleId =
-                roles.First(q => q.Name == USERROLE).Id
+                roles.First(q => q.Name == Roles.USERROLE).Id
             });
 
 

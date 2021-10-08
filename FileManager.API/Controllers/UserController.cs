@@ -13,10 +13,10 @@ namespace FileManager.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class RegisterController : ControllerBase
+    public class UserController : ControllerBase
     {
         private readonly UserManager<AppUser> userManager;
-        public RegisterController(UserManager<AppUser> _userManager)
+        public UserController(UserManager<AppUser> _userManager)
         {
             userManager = _userManager;
         }
@@ -29,7 +29,7 @@ namespace FileManager.API.Controllers
                 AppUserManager manager = new AppUserManager(userManager);
                 var result = await manager.CreateUser(model);
                 if (result.Success)
-                    return Ok(model);
+                    return Ok(result);
                 else
                     return StatusCode(500, result.Message);
             }
