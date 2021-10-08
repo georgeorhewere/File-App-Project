@@ -21,27 +21,44 @@ namespace FileManager.API.Controllers
             userManager = _userManager;
         }
         // POST api/register
-        [HttpPost]
+
+        [HttpPost]       
         public async Task<IActionResult> Post(RegistrationViewModel model)
         {
             if (ModelState.IsValid)
             {
                 AppUserManager manager = new AppUserManager(userManager);
                 var result = await manager.CreateUser(model);
-                if (result.Success)
-                    return Ok(result);
-                else
-                    return StatusCode(500, result.Message);
+
+                return result.Success ? Ok(result) : StatusCode(500, result.Message);
             }
             else
             {                
                 return BadRequest(ModelState);
             }
-
             
         }
 
 
+
+        [HttpPost]
+        [Route("AssignUserRole")]
+        public async Task<IActionResult> AssignUserRole(AssignRoleViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                AppUserManager manager = new AppUserManager(userManager);
+                var result = await manager.AssignUserRole(model);
+
+                return result.Success ? Ok(result) : StatusCode(500, result);
+
+
+            }
+            else
+            {
+                return BadRequest(ModelState);
+            }
+        }
 
     }
 }
