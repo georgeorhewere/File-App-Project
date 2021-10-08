@@ -17,8 +17,8 @@ namespace FileManager.Data.Seed
             // Seed App Roles
             List<IdentityRole> roles = new List<IdentityRole>()
             {
-                new IdentityRole { Name = ADMINROLE, NormalizedName = "ADMINISTRATOR" },
-                new IdentityRole { Name = USERROLE, NormalizedName = "USER" }
+                new IdentityRole { Name = ADMINROLE, NormalizedName = ADMINROLE.ToUpper() },
+                new IdentityRole { Name = USERROLE, NormalizedName = USERROLE.ToUpper() }
             };
 
             builder.Entity<IdentityRole>().HasData(roles);
@@ -36,6 +36,9 @@ namespace FileManager.Data.Seed
                     NormalizedUserName = "ADMIN@FILEMANAGER.COM",
                     Email = "admin@filemanager.com",
                     NormalizedEmail = "ADMIN@FILEMANAGER.COM",
+                    EmailConfirmed = true,
+                    FullName = "FileManager Administrator"
+                   
                 },
 
                 new AppUser {
@@ -43,6 +46,8 @@ namespace FileManager.Data.Seed
                     NormalizedUserName = "JOHNDOE@FILEMANAGER.COM",
                     Email = "johndoe@filemanager.com",
                     NormalizedEmail = "JOHNDOE@FILEMANAGER.COM",
+                    EmailConfirmed = true,
+                    FullName = "John Doe"
                 },
             };
     
