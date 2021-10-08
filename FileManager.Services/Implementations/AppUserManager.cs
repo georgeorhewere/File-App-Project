@@ -19,8 +19,6 @@ namespace FileManager.Services.Implementations
             userManager = _userManager;
         }
 
-
-
         public async Task<ServiceResultViewModel> CreateUser(RegistrationViewModel model)
         {
             ServiceResultViewModel result = new ServiceResultViewModel();

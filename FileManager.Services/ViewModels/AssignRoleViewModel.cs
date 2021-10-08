@@ -9,5 +9,8 @@ namespace FileManager.Services.ViewModels
         public string UserId { get; set; }
         [Required]
         public bool IsAdmin { get; set; }
+        
+
+
     }
 }

@@ -1,4 +1,7 @@
 ﻿using FileManager.Data;
+using FileManager.Services.Implementations;
+using FileManager.Services.Interfaces;
+using FileManager.Services.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -14,11 +17,28 @@ namespace FileManager.API.Controllers
     public class LoginController : ControllerBase
     {
         private readonly SignInManager<AppUser> _signInManager;
-        public LoginController(SignInManager<AppUser> signInManager)
+        private readonly IJWTConfig _config;
+        public LoginController(SignInManager<AppUser> signInManager, IJWTConfig config)
         {
             _signInManager = signInManager;
+            _config = config;
         }
 
+
+        [HttpPost]        
+        public async Task<IActionResult> Post(LoginViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                AppLoginManager manager = new AppLoginManager(_signInManager,_config);
+                var loginResult = await manager.LoginUser(model);
+                return loginResult.Success ?  Ok(loginResult) : StatusCode(500,loginResult);
+            }
+            else
+            {
+                return BadRequest(ModelState);
+            }
+        }
 
 
         //[HttpPost]

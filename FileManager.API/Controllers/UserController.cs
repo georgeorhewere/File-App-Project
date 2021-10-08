@@ -1,6 +1,7 @@
 ﻿using FileManager.Data;
 using FileManager.Services.Implementations;
 using FileManager.Services.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -22,7 +23,8 @@ namespace FileManager.API.Controllers
         }
         // POST api/register
 
-        [HttpPost]       
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Post(RegistrationViewModel model)
         {
             if (ModelState.IsValid)
@@ -41,8 +43,10 @@ namespace FileManager.API.Controllers
 
 
 
+
         [HttpPost]
-        [Route("AssignUserRole")]
+        [Route("AssignUserRole")]   
+        [Authorize(Roles ="Administrator")]
         public async Task<IActionResult> AssignUserRole(AssignRoleViewModel model)
         {
             if (ModelState.IsValid)
@@ -51,8 +55,6 @@ namespace FileManager.API.Controllers
                 var result = await manager.AssignUserRole(model);
 
                 return result.Success ? Ok(result) : StatusCode(500, result);
-
-
             }
             else
             {
