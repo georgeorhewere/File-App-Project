@@ -7,7 +7,7 @@ using FileManager.Data;
 namespace FileManager.Repository
 {
 
-    public class SubmissionRepository: BaseRepository,IRepository<Submission>,ISubmissionRepository
+    public class SubmissionRepository: BaseRepository, ISubmissionRepository
     {        
 
         public SubmissionRepository(FileManagerDbContext _context):base(_context)
@@ -24,12 +24,12 @@ namespace FileManager.Repository
             return context.Submissions.Where(s=> s.TransactionId == transactionId).FirstOrDefault();
         }
 
-        public void Save(Submission entity){
+        public async Task Save(Submission entity){
             try
             {
                
                context.Submissions.Add(entity);
-               context.SaveChanges();
+               await context.SaveChangesAsync();
                 
 
             }catch(Exception ex){

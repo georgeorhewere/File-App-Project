@@ -13,4 +13,9 @@ namespace FileManager.Services.Interfaces
         string Audience { get; set; }
         int ExpiryTimeInMinutes { get; set; }
     }
+    public interface IServerFolderConfig
+    {
+        string Folder { get; set; }
+        
+    }
 }

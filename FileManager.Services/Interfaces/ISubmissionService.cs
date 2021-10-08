@@ -1,3 +1,4 @@
+using FileManager.Services.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +11,7 @@ namespace FileManager.API.Services
 public interface ISubmissionService
 {
 
-      //void  AddSubmission(Submission model);
+        Task<ServiceResultViewModel> AddSubmission(SubmissionViewModel model);
 
       //Submission GetSubmissionById(Guid submissionId);
       

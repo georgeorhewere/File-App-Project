@@ -14,4 +14,9 @@ namespace FileManager.Services.Implementations
         public string Audience { get; set; }
         public int ExpiryTimeInMinutes { get; set; }
     }
+
+    public class ServerFolderConfig : IServerFolderConfig
+    {
+        public string Folder { get; set; }
+    }
 }

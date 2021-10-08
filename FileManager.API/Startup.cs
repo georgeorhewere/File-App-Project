@@ -21,6 +21,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using FileManager.Services.Implementations;
 using FileManager.Services.Interfaces;
+using FileManager.API.Services;
 
 namespace FileManager.API
 {
@@ -61,8 +62,14 @@ namespace FileManager.API
 
                  return config;
              });
+            services.AddSingleton<IServerFolderConfig, ServerFolderConfig>(scope =>
+            {
+                ServerFolderConfig config = new ServerFolderConfig();
+                config.Folder = Configuration["Server:Folder"];
+                return config;
+            });
 
-            // Add Authentication for google
+            // Add Authentication for jwt and for google
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                  .AddJwtBearer(options =>
                  {
@@ -84,6 +91,14 @@ namespace FileManager.API
                 opt.ClientSecret = googleAuth["ClientSecret"];
                 opt.SignInScheme = IdentityConstants.ExternalScheme;
             });
+
+            // scoped => created per web request => available till the end of this request
+            services.AddScoped(typeof(ISubmissionRepository), typeof(SubmissionRepository));
+            services.AddScoped(typeof(ISubmissionFileRepository), typeof(SubmissionFileRepository));
+            // transient => creeated when injected or requested. -> very short life time
+            services.AddTransient<ISubmissionService, SubmissionService>();
+
+
 
 
 

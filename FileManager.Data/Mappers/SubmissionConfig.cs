@@ -13,9 +13,11 @@ namespace FileManager.Data
         {
 
             builder.ToTable("Submissions");
-            builder.Property(t=> t.TransactionId);
-            builder.Property(t=> t.SubjectMatter);
-            builder.Property(t=> t.VendorName);
+            builder.Property(t=> t.TransactionId).IsRequired();
+            builder.Property(t=> t.SubjectMatter).IsRequired();
+            builder.Property(t=> t.VendorName).IsRequired();
+            builder.Property(t => t.DateCreated).IsRequired();
+            builder.Property(t => t.DateModified).IsRequired();
             builder.HasKey(t=> t.TransactionId);
             builder.HasMany(t=> t.SubmissionFiles).WithOne().HasForeignKey(t=> t.TransactionId);
             

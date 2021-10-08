@@ -11,7 +11,10 @@ namespace FileManager.Data
         public Guid SubmissionFileId { get; set; }
         public Guid TransactionId { get; set; }
         public string Name { get; set; }
-        
-        
+        public string UniqueName { get; set; }
+        public DateTime DateCreated { get; set; }
+        public DateTime DateModified { get; set; }
+
+
     }
 }

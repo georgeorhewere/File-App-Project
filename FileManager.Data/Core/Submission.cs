@@ -11,6 +11,8 @@ namespace FileManager.Data
         public Guid TransactionId { get; set; }
         public string SubjectMatter { get; set; }
         public string VendorName { get; set; }
+        public DateTime DateCreated { get; set; }
+        public DateTime DateModified { get; set; }
         public ICollection<SubmissionFile> SubmissionFiles {get; set;} 
         
     }

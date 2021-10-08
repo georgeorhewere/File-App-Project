@@ -4,14 +4,16 @@ using FileManager.Repository;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace FileManager.Repository.Migrations
 {
     [DbContext(typeof(FileManagerDbContext))]
-    partial class FileManagerDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211008140815_updatedSubmissionFileModel")]
+    partial class updatedSubmissionFileModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -89,35 +91,35 @@ namespace FileManager.Repository.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "63fa277f-84e7-4c0b-8ceb-aece4072cb62",
+                            Id = "9b3a0a20-6ccb-45d7-8952-472fed1a1ae3",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "fd36eef5-9da1-443e-b909-e1beecd9fc3c",
+                            ConcurrencyStamp = "01573bd0-24cc-42fb-acd6-a96e6a79a738",
                             Email = "admin@filemanager.com",
                             EmailConfirmed = true,
                             FullName = "FileManager Administrator",
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@FILEMANAGER.COM",
                             NormalizedUserName = "ADMIN@FILEMANAGER.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEHv68eCmhTrotA1/km7yTRyxwIB7L5HD+nS81s2JtlDzmkQ7XQ9qsiv9ck0a11zfPQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAELF4izBlEC5mnMTP9wBvH2BZYMIP8ZNxo1rTaM1b3XGfdsoIZM6e95OQ2ALfYgdDAw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "6f7db7a6-9e14-48ad-8d07-2160a17c070e",
+                            SecurityStamp = "9aec7876-5498-437e-b060-38887980562f",
                             TwoFactorEnabled = false,
                             UserName = "admin@filemanager.com"
                         },
                         new
                         {
-                            Id = "328ccefc-6fad-49a1-8627-664f6f9ff8a9",
+                            Id = "c4dc3704-664d-4b6c-b131-01127695f276",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "ea20b903-a9e0-460e-bdc8-2f4e9610281d",
+                            ConcurrencyStamp = "d656bfd9-d98e-45e9-bcf3-3f693f83a26e",
                             Email = "johndoe@filemanager.com",
                             EmailConfirmed = true,
                             FullName = "John Doe",
                             LockoutEnabled = false,
                             NormalizedEmail = "JOHNDOE@FILEMANAGER.COM",
                             NormalizedUserName = "JOHNDOE@FILEMANAGER.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEBaNV9Q+IDRbkTc13H1d3GihicnDA0yELvjGzu1q77g30Wbt7F4q0hU0hNUeFlmRPA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEFunOH5tXOuEdkfBnG1NIecqH44hcUAWhZtFYGxr8EdrrBiNqIRJ1FSnPkqcjevBxg==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "f58ac6fe-f3e2-43c4-b091-7d81ad80d4ea",
+                            SecurityStamp = "3db2045f-47fb-43bf-b813-51da80c0141f",
                             TwoFactorEnabled = false,
                             UserName = "johndoe@filemanager.com"
                         });
@@ -129,18 +131,10 @@ namespace FileManager.Repository.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("DateCreated")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("DateModified")
-                        .HasColumnType("datetime2");
-
                     b.Property<string>("SubjectMatter")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("VendorName")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("TransactionId");
@@ -154,21 +148,13 @@ namespace FileManager.Repository.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("DateCreated")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("DateModified")
-                        .HasColumnType("datetime2");
-
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid>("TransactionId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("UniqueName")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("SubmissionFileId");
@@ -207,15 +193,15 @@ namespace FileManager.Repository.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "6876c2ed-e57a-49ba-83e0-21f83a470ac2",
-                            ConcurrencyStamp = "d3f3e250-b72a-4430-82d5-ca1ef809fdbb",
+                            Id = "46a6541f-ad32-46d4-ac5b-583f8294147d",
+                            ConcurrencyStamp = "cdc53665-3a9b-4180-9b30-774d58763ca8",
                             Name = "Administrator",
                             NormalizedName = "ADMINISTRATOR"
                         },
                         new
                         {
-                            Id = "64db6fbe-3042-4d64-89ab-cace0c6c3903",
-                            ConcurrencyStamp = "1818eb86-6e4f-406d-ac7a-34e1de201899",
+                            Id = "baaad2a5-dd82-40fd-8946-d8b8b591f07c",
+                            ConcurrencyStamp = "c4b872d6-501b-46b5-99df-b313ec771275",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -308,13 +294,13 @@ namespace FileManager.Repository.Migrations
                     b.HasData(
                         new
                         {
-                            UserId = "63fa277f-84e7-4c0b-8ceb-aece4072cb62",
-                            RoleId = "6876c2ed-e57a-49ba-83e0-21f83a470ac2"
+                            UserId = "9b3a0a20-6ccb-45d7-8952-472fed1a1ae3",
+                            RoleId = "46a6541f-ad32-46d4-ac5b-583f8294147d"
                         },
                         new
                         {
-                            UserId = "328ccefc-6fad-49a1-8627-664f6f9ff8a9",
-                            RoleId = "64db6fbe-3042-4d64-89ab-cace0c6c3903"
+                            UserId = "c4dc3704-664d-4b6c-b131-01127695f276",
+                            RoleId = "baaad2a5-dd82-40fd-8946-d8b8b591f07c"
                         });
                 });
 

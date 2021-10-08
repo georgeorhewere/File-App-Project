@@ -7,7 +7,7 @@ using FileManager.Data;
 namespace FileManager.Repository
 {
 
-    public class SubmissionFileRepository: BaseRepository,IRepository<SubmissionFile>,ISubmissionFileRepository
+    public class SubmissionFileRepository: BaseRepository,ISubmissionFileRepository
     {        
 
         public SubmissionFileRepository(FileManagerDbContext _context):base(_context)
@@ -28,22 +28,19 @@ namespace FileManager.Repository
 
          } 
 
-        public void Save(SubmissionFile entity){
+        public async Task SaveList(IEnumerable<SubmissionFile> entities)
+        {
             try
             {
-               
-               context.SubmissionFiles.Add(entity);
-               context.SaveChanges();
-                
-
-            }catch(Exception ex){
-               /// database level error handling 
+                await context.SubmissionFiles.AddRangeAsync(entities);
+                context.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                /// database level error handling 
+                throw;
             }
         }
-
-
-        
-
     }
 
 }
