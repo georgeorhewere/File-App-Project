@@ -14,8 +14,7 @@ public interface ISubmissionService
         Task<ServiceResultViewModel> AddSubmission(SubmissionViewModel model);
 
       //Submission GetSubmissionById(Guid submissionId);
-      
-      //IEnumerable<Submission> GetSubmissions(int count);
+      Task<IEnumerable<SubmissionViewModel>> GetSubmissions(string search, int page, int take);
     
 }
 

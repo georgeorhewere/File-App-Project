@@ -37,15 +37,14 @@ namespace FileManager.API.Controllers
 
             IFileManager fileManager = new ServerFileManager(folderConfig,hostEnvironment.ContentRootPath);
             var submissionId = Guid.NewGuid();
-            var result = await fileManager.SaveToStorage(submissionId, model.SubmissionFiles);
-
-            
+            var result = await fileManager.SaveToStorage(submissionId, model.SubmissionFiles);           
 
             if (result.Success)
             {
                 List<FileViewModel> savedFiles = new List<FileViewModel>();
                 foreach (var item in result.Data)
                     savedFiles.Add(new FileViewModel { Name = item.Name, UniqueName = item.UniqueName });
+
                 // save dbinfo
                 var viewModel = new SubmissionViewModel
                 {
@@ -72,6 +71,25 @@ namespace FileManager.API.Controllers
 
 
 
+        }
+
+
+        [HttpPost]
+        [Route("GetSubmissions")]
+        [Authorize]
+        public async Task<IActionResult> Submissions([FromBody] SearchSubmissionViewModel model)
+        {
+            try
+            {
+                var submissions = await submissionService.GetSubmissions(model.Search, model.Page, model.Take);
+                return Ok(submissions);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Unexpected server error");
+
+                throw;
+            }
         }
 
     }

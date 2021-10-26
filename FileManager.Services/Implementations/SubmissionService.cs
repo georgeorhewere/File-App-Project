@@ -1,6 +1,7 @@
 ﻿using FileManager.API.Services;
 using FileManager.Data;
 using FileManager.Repository;
+using FileManager.Services.Interfaces;
 using FileManager.Services.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -14,10 +15,15 @@ namespace FileManager.Services.Implementations
     {
         protected readonly ISubmissionRepository submissionRepository;
         protected readonly ISubmissionFileRepository submissionFileRepository;
-        public SubmissionService(ISubmissionRepository _submissionRepository, ISubmissionFileRepository _submissionFileRepository)
+        private readonly IServerFolderConfig folderConfig;
+        public SubmissionService(ISubmissionRepository _submissionRepository, 
+                    ISubmissionFileRepository _submissionFileRepository,
+                    IServerFolderConfig _folderConfig
+            )
         {
             submissionRepository = _submissionRepository;
             submissionFileRepository = _submissionFileRepository;
+            folderConfig = _folderConfig;
         }
 
         public async Task<ServiceResultViewModel> AddSubmission(SubmissionViewModel model)
@@ -64,6 +70,29 @@ namespace FileManager.Services.Implementations
             }
 
             return submitResult;
+        }
+
+        public async Task<IEnumerable<SubmissionViewModel>> GetSubmissions(string search, int page, int take)
+        {
+            return submissionRepository.GetSubmissions(search, page, take)
+                        .Select(s => new SubmissionViewModel
+                        {
+                            TransactionId = s.TransactionId,
+                            SubjectMatter = s.SubjectMatter,
+                            VendorName = s.VendorName,
+                            SubmissionFiles = s.SubmissionFiles.Select(sf => new FileViewModel
+                            {
+                                Name = sf.Name,
+                                Url = GetFileUrl(s.TransactionId.ToString(), sf.UniqueName),
+                                SubmissionFileId = sf.SubmissionFileId.ToString()
+                            }).ToList()
+                        }).ToList();
+                                                                                       
+        }
+
+        private string GetFileUrl(string submissionId,string fileName)
+        {
+            return $"{folderConfig.BaseUrl}{folderConfig.Folder}/{submissionId}/{fileName}";
         }
     }
 }

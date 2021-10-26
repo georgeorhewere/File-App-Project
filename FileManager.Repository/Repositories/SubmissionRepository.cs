@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using FileManager.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace FileManager.Repository
 {
@@ -37,9 +38,19 @@ namespace FileManager.Repository
             }
         }
 
+        public IEnumerable<Submission> GetSubmissions(string search = "", int page = 1, int take = 30)
+        {
+            int skip = (page - 1) * take;
 
-        
-
+            return context.Submissions
+                           .Include(s => s.SubmissionFiles)
+                           .Where(s=> (string.IsNullOrEmpty(search) || 
+                                                  s.VendorName.Contains(search) ||
+                                                  s.SubjectMatter.Contains(search)))
+                                                 .Skip(skip)
+                                                 .Take(take)
+                                                 .ToList();
+        }
     }
 
 }

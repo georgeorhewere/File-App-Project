@@ -18,5 +18,6 @@ namespace FileManager.Services.Implementations
     public class ServerFolderConfig : IServerFolderConfig
     {
         public string Folder { get; set; }
+        public string BaseUrl { get; set; }
     }
 }

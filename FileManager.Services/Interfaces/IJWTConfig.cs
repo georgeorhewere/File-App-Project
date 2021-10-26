@@ -16,6 +16,7 @@ namespace FileManager.Services.Interfaces
     public interface IServerFolderConfig
     {
         string Folder { get; set; }
-        
+        string BaseUrl { get; set; }
+
     }
 }

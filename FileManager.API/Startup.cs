@@ -66,6 +66,7 @@ namespace FileManager.API
             {
                 ServerFolderConfig config = new ServerFolderConfig();
                 config.Folder = Configuration["Server:Folder"];
+                config.BaseUrl = Configuration["Server:Url"];
                 return config;
             });
 
